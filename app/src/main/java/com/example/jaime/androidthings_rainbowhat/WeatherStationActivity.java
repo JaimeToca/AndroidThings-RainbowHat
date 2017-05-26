@@ -13,7 +13,7 @@ import static com.example.jaime.androidthings_rainbowhat.managers.LedsABCManager
 public class WeatherStationActivity extends Activity {
 
     private static String TAG = "RainbowHat";
-    private LedsABCManager ledsABCManager;
+    private LedsABCManager ledsABCManager; 
 
 
     @Override
