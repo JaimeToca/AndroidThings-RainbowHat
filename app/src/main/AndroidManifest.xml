@@ -13,7 +13,7 @@
 
         <uses-library android:name="com.google.android.things"/>
 
-        <activity android:name=".HomeActivity">
+        <activity android:name=".WeatherStationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -3,21 +3,18 @@ package com.example.jaime.androidthings_rainbowhat;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import com.example.jaime.androidthings_rainbowhat.managers.LedsABCManager;
 import com.google.android.things.contrib.driver.rainbowhat.RainbowHat;
 import com.google.android.things.pio.Gpio;
-
 import java.io.IOException;
 import android.os.Handler;
+import static com.example.jaime.androidthings_rainbowhat.managers.LedsABCManager.*;
 
-public class HomeActivity extends Activity {
+public class WeatherStationActivity extends Activity {
 
-    private Handler handler = new Handler();
     private static String TAG = "RainbowHat";
-    private Gpio led;
+    private LedsABCManager ledsABCManager;
 
-    private static String LED_A_RED = "BCM6";
-    private static String LED_B_GREEN = "BCM19";
-    private static String LED_C_BLUE = "BCM26";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,27 +22,22 @@ public class HomeActivity extends Activity {
         setContentView(R.layout.activity_main);
         Log.d(TAG, "Started Weather Station");
 
-        try {
-            led = RainbowHat.openLed(LED_C_BLUE);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ledsABCManager = new LedsABCManager();
 
-        try {
-            led.setValue(true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        ledsABCManager.powerOnLed(A_RED);
+//        ledsABCManager.powerOnLed(B_GREEN);
+//        ledsABCManager.powerOnLed(C_BLUE);
+
+//        ledsABCManager.powerOffLed(A_RED);
+//        ledsABCManager.powerOffLed(B_GREEN);
+//        ledsABCManager.powerOffLed(C_BLUE);
+
 
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        try {
-            led.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 }
