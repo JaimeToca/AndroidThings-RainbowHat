@@ -22,6 +22,7 @@ import android.util.Log;
 
 import com.example.jaime.androidthings_rainbowhat.managers.AlphaNumericDisplayManager;
 import com.example.jaime.androidthings_rainbowhat.managers.LedsABCManager;
+import com.example.jaime.androidthings_rainbowhat.managers.RainbowLedsManager;
 import com.google.android.things.contrib.driver.ht16k33.AlphanumericDisplay;
 import com.google.android.things.contrib.driver.rainbowhat.RainbowHat;
 import com.google.android.things.pio.Gpio;
@@ -42,18 +43,9 @@ public class WeatherStationActivity extends Activity {
         setContentView(R.layout.activity_main);
         Log.d(TAG, "Started Weather Station");
 
-        final AlphaNumericDisplayManager alphaNumericDisplayManager = new AlphaNumericDisplayManager();
-        alphaNumericDisplayManager.load();
-        alphaNumericDisplayManager.clear();
-
-//        ledsABCManager.powerOnLed(A_RED);
-//        ledsABCManager.powerOnLed(B_GREEN);
-//        ledsABCManager.powerOnLed(C_BLUE);
-
-//        ledsABCManager.powerOffLed(A_RED);
-//        ledsABCManager.powerOffLed(B_GREEN);
-//        ledsABCManager.powerOffLed(C_BLUE);
-
+        RainbowLedsManager rainbowLedsManager = new RainbowLedsManager();
+        rainbowLedsManager.load();
+        rainbowLedsManager.powerOnRainbowLeds(981.0f);
     }
 
     @Override

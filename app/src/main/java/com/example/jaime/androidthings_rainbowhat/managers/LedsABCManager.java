@@ -24,10 +24,6 @@ import java.io.IOException;
 
 public class LedsABCManager {
 
-    public static String LED_RED = "BCM6";
-    public static String LED_GREEN = "BCM19";
-    public static String LED_BLUE = "BCM26";
-
     private Gpio led;
 
     public void powerOnLed(String ledColor){
