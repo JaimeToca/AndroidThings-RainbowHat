@@ -19,6 +19,8 @@ package com.example.jaime.androidthings_rainbowhat;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.example.jaime.androidthings_rainbowhat.managers.AlphaNumericDisplayManager;
 import com.example.jaime.androidthings_rainbowhat.managers.LedsABCManager;
 import com.google.android.things.contrib.driver.ht16k33.AlphanumericDisplay;
 import com.google.android.things.contrib.driver.rainbowhat.RainbowHat;
@@ -32,26 +34,17 @@ public class WeatherStationActivity extends Activity {
     private static String TAG = "RainbowHat";
     private LedsABCManager ledsABCManager;
     private AlphanumericDisplay alphanumericDisplay;
+    private Handler handler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "Started Weather Station");
 
-        try {
-            alphanumericDisplay = RainbowHat.openDisplay();
-            alphanumericDisplay.setEnabled(true);
-            alphanumericDisplay.display("2030");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            RainbowHat.openLedBlue();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        final AlphaNumericDisplayManager alphaNumericDisplayManager = new AlphaNumericDisplayManager();
+        alphaNumericDisplayManager.load();
+        alphaNumericDisplayManager.clear();
 
 //        ledsABCManager.powerOnLed(A_RED);
 //        ledsABCManager.powerOnLed(B_GREEN);
@@ -60,7 +53,6 @@ public class WeatherStationActivity extends Activity {
 //        ledsABCManager.powerOffLed(A_RED);
 //        ledsABCManager.powerOffLed(B_GREEN);
 //        ledsABCManager.powerOffLed(C_BLUE);
-
 
     }
 

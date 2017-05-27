@@ -16,7 +16,36 @@
 
 package com.example.jaime.androidthings_rainbowhat.managers;
 
+import com.google.android.things.contrib.driver.ht16k33.AlphanumericDisplay;
+import com.google.android.things.contrib.driver.rainbowhat.RainbowHat;
+import java.io.IOException;
+
 public class AlphaNumericDisplayManager {
 
+    private AlphanumericDisplay alphanumericDisplay;
 
+    public void load(){
+        try {
+            alphanumericDisplay = RainbowHat.openDisplay();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void display(String text){
+        try {
+            alphanumericDisplay.setEnabled(true);
+            alphanumericDisplay.display(text);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void clear(){
+        try {
+            alphanumericDisplay.clear();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
