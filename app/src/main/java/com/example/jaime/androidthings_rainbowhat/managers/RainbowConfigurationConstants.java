@@ -16,7 +16,6 @@
 package com.example.jaime.androidthings_rainbowhat.managers;
 
 public class RainbowConfigurationConstants {
-
     public static final String LED_RED = "BCM6";
     public static final String LED_GREEN = "BCM19";
     public static final String LED_BLUE = "BCM26";
@@ -24,5 +23,4 @@ public class RainbowConfigurationConstants {
     public static final String SPIBUS = "SPI0.0";
     public static final String PWM0 = "PWM0";
     public static final String PWM1 = "PWM1";
-
 }

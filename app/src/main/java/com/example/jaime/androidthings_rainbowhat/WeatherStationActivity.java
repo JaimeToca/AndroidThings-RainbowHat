@@ -19,7 +19,6 @@ package com.example.jaime.androidthings_rainbowhat;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-
 import com.example.jaime.androidthings_rainbowhat.managers.AlphaNumericDisplayManager;
 import com.example.jaime.androidthings_rainbowhat.managers.LedsABCManager;
 import com.example.jaime.androidthings_rainbowhat.managers.RainbowLedsManager;
@@ -45,7 +44,7 @@ public class WeatherStationActivity extends Activity {
 
         RainbowLedsManager rainbowLedsManager = new RainbowLedsManager();
         rainbowLedsManager.load();
-        rainbowLedsManager.powerOnRainbowLeds(981.0f);
+        rainbowLedsManager.powerOnRainbowLeds(1025.0f);
     }
 
     @Override
