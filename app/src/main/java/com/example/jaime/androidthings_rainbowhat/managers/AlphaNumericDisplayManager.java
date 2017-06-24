@@ -20,7 +20,7 @@ import com.google.android.things.contrib.driver.ht16k33.AlphanumericDisplay;
 import com.google.android.things.contrib.driver.rainbowhat.RainbowHat;
 import java.io.IOException;
 
-class AlphaNumericDisplayManager {
+public class AlphaNumericDisplayManager {
 
     private AlphanumericDisplay alphanumericDisplay;
 

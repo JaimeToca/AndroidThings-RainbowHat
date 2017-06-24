@@ -25,7 +25,6 @@ public class DependencyInjector {
     }
 
     private DependencyInjector() {
+
     }
-
-
 }

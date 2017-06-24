@@ -26,16 +26,13 @@ public class WeatherSensorManager {
     private static final String TAG = "WeatherSensorManager";
     private static final long READ_EVERY = 20000;
 
-    private Handler handler;
+    private Handler handler = new Handler();
     private Bmx280 sensor;
     private Context context;
     private float temperature, pressure;
-    private AlphaNumericDisplayManager displayManager;
 
-    public WeatherSensorManager(Handler handler, Context context,
-                                AlphaNumericDisplayManager displayManager){
+    public WeatherSensorManager(Context context){
         this.context = context;
-        this.displayManager = displayManager;
     }
 
     public void load(){
@@ -44,18 +41,17 @@ public class WeatherSensorManager {
             sensor.setMode(Bmx280.MODE_NORMAL);
             sensor.setTemperatureOversampling(Bmx280.OVERSAMPLING_1X);
             sensor.setPressureOversampling(Bmx280.OVERSAMPLING_1X);
-            handler = new Handler();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void showTemperatureAndPressure(){
+    public void showTemperatureAndPressure(final AlphaNumericDisplayManager displayManager){
         handler.post(new Runnable() {
             @Override
             public void run() {
                 try {
-                    temperature = fahrenheitToCelsius(sensor.readTemperature());
+                    temperature = sensor.readTemperature();
                     pressure = sensor.readPressure();
                     displayManager.display(temperature);
                 } catch (IOException e) {
@@ -72,9 +68,5 @@ public class WeatherSensorManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private float fahrenheitToCelsius(float temperature){
-        return  ((temperature - 32)*5)/9;
     }
 }
