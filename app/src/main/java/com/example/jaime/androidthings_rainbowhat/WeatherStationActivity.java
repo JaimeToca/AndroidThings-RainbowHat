@@ -18,16 +18,10 @@ package com.example.jaime.androidthings_rainbowhat;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
-import com.example.jaime.androidthings_rainbowhat.managers.AlphaNumericDisplayManager;
 import com.example.jaime.androidthings_rainbowhat.managers.LedsABCManager;
-import com.example.jaime.androidthings_rainbowhat.managers.RainbowLedsManager;
+import com.google.android.things.contrib.driver.bmx280.Bmx280;
 import com.google.android.things.contrib.driver.ht16k33.AlphanumericDisplay;
-import com.google.android.things.contrib.driver.rainbowhat.RainbowHat;
-import com.google.android.things.pio.Gpio;
-import java.io.IOException;
 import android.os.Handler;
-import static com.example.jaime.androidthings_rainbowhat.managers.LedsABCManager.*;
 
 public class WeatherStationActivity extends Activity {
 
@@ -35,21 +29,17 @@ public class WeatherStationActivity extends Activity {
     private LedsABCManager ledsABCManager;
     private AlphanumericDisplay alphanumericDisplay;
     private Handler handler = new Handler();
+    private Bmx280 sensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d(TAG, "Started Weather Station");
 
-        RainbowLedsManager rainbowLedsManager = new RainbowLedsManager();
-        rainbowLedsManager.load();
-        rainbowLedsManager.powerOnRainbowLeds(1025.0f);
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

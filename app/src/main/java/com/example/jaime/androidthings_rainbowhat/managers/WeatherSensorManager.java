@@ -1,61 +1,80 @@
+/*
+ * Copyright (C) 2017 Jaime Toca.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.example.jaime.androidthings_rainbowhat.managers;
 
 import android.content.Context;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import com.google.android.things.contrib.driver.bmx280.Bmx280SensorDriver;
+import com.google.android.things.contrib.driver.bmx280.Bmx280;
+import com.google.android.things.contrib.driver.rainbowhat.RainbowHat;
+import android.os.Handler;
 import java.io.IOException;
-import static android.content.Context.SENSOR_SERVICE;
-import static com.example.jaime.androidthings_rainbowhat.managers.RainbowConfigurationConstants.I2CBUS;
 
 public class WeatherSensorManager {
 
-    private SensorManager mSensorManager;
-    private Context context;
-    private Bmx280SensorDriver weatherSensorDriver;
+    private static final String TAG = "WeatherSensorManager";
+    private static final long READ_EVERY = 20000;
 
-    public WeatherSensorManager(Context context){
+    private Handler handler;
+    private Bmx280 sensor;
+    private Context context;
+    private float temperature, pressure;
+    private AlphaNumericDisplayManager displayManager;
+
+    public WeatherSensorManager(Handler handler, Context context,
+                                AlphaNumericDisplayManager displayManager){
         this.context = context;
+        this.displayManager = displayManager;
     }
 
     public void load(){
-        mSensorManager = ((SensorManager) context.getSystemService(SENSOR_SERVICE));
         try {
-            weatherSensorDriver = new Bmx280SensorDriver(I2CBUS);
-            mSensorManager.registerDynamicSensorCallback(sensorCallback);
-            weatherSensorDriver.registerTemperatureSensor();
-            weatherSensorDriver.registerPressureSensor();
+            sensor = RainbowHat.openSensor();
+            sensor.setMode(Bmx280.MODE_NORMAL);
+            sensor.setTemperatureOversampling(Bmx280.OVERSAMPLING_1X);
+            sensor.setPressureOversampling(Bmx280.OVERSAMPLING_1X);
+            handler = new Handler();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private SensorEventListener mTemperatureListener = new SensorEventListener() {
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-//            mLastTemperature = event.values[0];
-
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-//            Log.d(TAG, "accuracy changed: " + accuracy);
-        }
-    };
-
-    private SensorManager.DynamicSensorCallback sensorCallback = new SensorManager.DynamicSensorCallback() {
-        @Override
-        public void onDynamicSensorConnected(Sensor sensor) {
-            if (sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE) {
-//                mSensorManager.registerListener(mTemperatureListener, sensor,
-//                        SensorManager.SENSOR_DELAY_NORMAL);
+    public void showTemperatureAndPressure(){
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    temperature = fahrenheitToCelsius(sensor.readTemperature());
+                    pressure = sensor.readPressure();
+                    displayManager.display(temperature);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                handler.postDelayed(this, READ_EVERY);
             }
+        });
+    }
+
+    public void close(){
+        try {
+            sensor.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        @Override
-        public void onDynamicSensorDisconnected(Sensor sensor) {
-            super.onDynamicSensorDisconnected(sensor);
-        }
-    };
+    }
+
+    private float fahrenheitToCelsius(float temperature){
+        return  ((temperature - 32)*5)/9;
+    }
 }

@@ -20,22 +20,30 @@ import com.google.android.things.contrib.driver.ht16k33.AlphanumericDisplay;
 import com.google.android.things.contrib.driver.rainbowhat.RainbowHat;
 import java.io.IOException;
 
-public class AlphaNumericDisplayManager {
+class AlphaNumericDisplayManager {
 
     private AlphanumericDisplay alphanumericDisplay;
 
     public void load(){
         try {
             alphanumericDisplay = RainbowHat.openDisplay();
+            alphanumericDisplay.setEnabled(true);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void display(String text){
+    void display(String text){
         try {
-            alphanumericDisplay.setEnabled(true);
             alphanumericDisplay.display(text);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void display(Float number){
+        try {
+            alphanumericDisplay.display(number);
         } catch (IOException e) {
             e.printStackTrace();
         }

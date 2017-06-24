@@ -58,7 +58,6 @@ public class RainbowLedsManager {
     }
 
 
-    //TODO : CHANGE THIS
     /* https://github.com/androidthings/weatherstation/blob/master/app/src/main/java/
      * com/example/androidthings/weatherstation/WeatherStationActivity.java */
     public void powerOnRainbowLeds(float pressure){
