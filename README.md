@@ -5,4 +5,5 @@ it shows the temperature and pressure using an alphanumeric display and rainbowl
 
 References  <br />
 https://www.youtube.com/watch?v=v3Dm5aeuQKE  <br />
-https://github.com/androidthings/contrib-drivers
+https://github.com/androidthings/contrib-drivers <br />
+https://github.com/androidthings/weatherstation <br />
