@@ -1,6 +1,6 @@
 # AndroidThings-RainbowHat
 
-This is a proof of concept app for android things. Its purpuse is to play with a rainbowHat and some contrib-drivers. <br />
+This is a proof of concept app for android things. Its purpuse is to play with the rainbowHat and some contrib-drivers. <br />
 it shows the temperature and pressure using an alphanumeric display and rainbowleds.
 
 References  <br />
