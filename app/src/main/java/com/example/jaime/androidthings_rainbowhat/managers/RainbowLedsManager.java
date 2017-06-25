@@ -57,14 +57,8 @@ public class RainbowLedsManager {
         return Color.HSVToColor(255,hsv);
     }
 
-
-    /* https://github.com/androidthings/weatherstation/blob/master/app/src/main/java/
-     * com/example/androidthings/weatherstation/WeatherStationActivity.java */
-    public void powerOnRainbowLeds(float pressure){
-        float t = (pressure - BAROMETER_RANGE_LOW) / (BAROMETER_RANGE_HIGH - BAROMETER_RANGE_LOW);
-        int ledPosition = (int) Math.ceil(N_LEDS * t);
-        ledPosition = Math.max(0, Math.min(ledPosition, N_LEDS));
-
+    void powerOnRainbowLeds(float pressure){
+        int ledPosition = getBarometerPosition(pressure);
 
         int[] colors = new int[N_LEDS];
         for (int i = 0; i < ledPosition; i++) {
@@ -77,6 +71,12 @@ public class RainbowLedsManager {
         } catch (IOException e) {
             Log.e("RainbowLedsManager", "Error setting ledstrip", e);
         }
+    }
+
+    private int getBarometerPosition(float pressure){
+        float t = (pressure - BAROMETER_RANGE_LOW) / (BAROMETER_RANGE_HIGH - BAROMETER_RANGE_LOW);
+        int ledPosition = (int) Math.ceil(N_LEDS * t);
+        return Math.max(0, Math.min(ledPosition, N_LEDS));
     }
 
 }

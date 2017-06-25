@@ -16,15 +16,36 @@
 
 package com.example.jaime.androidthings_rainbowhat;
 
+import android.content.Context;
+
+import com.example.jaime.androidthings_rainbowhat.managers.AlphaNumericDisplayManager;
+import com.example.jaime.androidthings_rainbowhat.managers.LedsABCManager;
+import com.example.jaime.androidthings_rainbowhat.managers.RainbowLedsManager;
+import com.example.jaime.androidthings_rainbowhat.managers.WeatherSensorManager;
+
 public class DependencyInjector {
 
-    private static final DependencyInjector ourInstance = new DependencyInjector();
+    private static DependencyInjector ourInstance;
 
     public static DependencyInjector getInstance() {
+        if ( ourInstance == null) return new DependencyInjector();
+
         return ourInstance;
     }
 
-    private DependencyInjector() {
+    public AlphaNumericDisplayManager injectAlphaNumericDisplayManager(){
+        return new AlphaNumericDisplayManager();
+    }
 
+    public LedsABCManager injectLedsABCManager(){
+        return new LedsABCManager();
+    }
+
+    public RainbowLedsManager injectRainbowLedsManager(){
+        return new RainbowLedsManager();
+    }
+
+    public WeatherSensorManager injectWeatherSensorManager(Context context){
+        return new WeatherSensorManager(context);
     }
 }

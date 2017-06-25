@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.example.jaime.androidthings_rainbowhat.managers;
 
 import android.content.Context;
@@ -46,7 +47,8 @@ public class WeatherSensorManager {
         }
     }
 
-    public void showTemperatureAndPressure(final AlphaNumericDisplayManager displayManager){
+    public void showTemperatureAndPressure(final AlphaNumericDisplayManager displayManager,
+                                           final RainbowLedsManager rainbowLedsManager){
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -54,6 +56,7 @@ public class WeatherSensorManager {
                     temperature = sensor.readTemperature();
                     pressure = sensor.readPressure();
                     displayManager.display(temperature);
+                    rainbowLedsManager.powerOnRainbowLeds(pressure);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

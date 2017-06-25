@@ -19,27 +19,41 @@ package com.example.jaime.androidthings_rainbowhat;
 import android.app.Activity;
 import android.os.Bundle;
 import com.example.jaime.androidthings_rainbowhat.managers.AlphaNumericDisplayManager;
+import com.example.jaime.androidthings_rainbowhat.managers.RainbowLedsManager;
 import com.example.jaime.androidthings_rainbowhat.managers.WeatherSensorManager;
 
 public class WeatherStationActivity extends Activity {
 
-    private static String TAG = "RainbowHat";
     private WeatherSensorManager weatherSensorManager;
+    private AlphaNumericDisplayManager alphaNumericDisplayManager;
+    private RainbowLedsManager rainbowLedsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final AlphaNumericDisplayManager alphaNumericDisplayManager = new AlphaNumericDisplayManager();
+        weatherSensorManager = DependencyInjector.getInstance().injectWeatherSensorManager(this);
+        alphaNumericDisplayManager = DependencyInjector.getInstance().injectAlphaNumericDisplayManager();
+        rainbowLedsManager = DependencyInjector.getInstance().injectRainbowLedsManager();
+        loadDrivers();
+    }
+
+    private void loadDrivers(){
         alphaNumericDisplayManager.load();
-        weatherSensorManager = new WeatherSensorManager(this);
         weatherSensorManager.load();
-        weatherSensorManager.showTemperatureAndPressure(alphaNumericDisplayManager);
+        rainbowLedsManager.load();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        weatherSensorManager.showTemperatureAndPressure(alphaNumericDisplayManager, rainbowLedsManager);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        alphaNumericDisplayManager.clear();
         weatherSensorManager.close();
     }
 }
